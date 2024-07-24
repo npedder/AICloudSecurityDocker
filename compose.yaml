@@ -1,0 +1,13 @@
+services:
+  node:
+    build: .\ftp
+    ports:
+      - "7010:7004"
+    volumes:
+      - photos:/app/volume
+  videorecognition:
+      build: .\VideoRecog
+      volumes:
+      - photos:/app/volume
+volumes:
+  photos:
