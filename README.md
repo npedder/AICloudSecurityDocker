@@ -1,0 +1,1 @@
+### A docker application that can recieve an image via a NodeJS FTP server container and predict the contents of the image using Ultralytics yolov8 detection module and report the findings back to the user.
