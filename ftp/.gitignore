@@ -1,6 +1,0 @@
-.env
-node_modules/
-Dockerfile.vr
-key.pem
-cert.pem
-node-docker-compose.yaml

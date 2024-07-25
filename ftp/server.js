@@ -5,11 +5,9 @@
 //When an image is recieved, it will run the python script process and will return if dog or no
 "use strict";
 require('dotenv').config('/.env')
-var watch = require('watch');
 var ftpd = require('ftpd');
 var fs = require('fs');
 
-const py = require('./process');
 
 var path = require('path');
 var keyFile;
@@ -17,7 +15,7 @@ var certFile;
 var server;
 var options = {
   host: process.env.IP || '127.0.1.1',
-  port: process.env.PORT || 7003,
+  port: process.env.PORT || 21,
   tls: null,
 };
 
@@ -60,10 +58,10 @@ if (process.env.KEY_FILE && process.env.CERT_FILE) {
 
 server = new ftpd.FtpServer(options.host, {
   getInitialCwd: function() {
-    return '/public';
+    return '/volume';
   },
   getRoot: function() {
-    return (process.cwd() + '/public');
+    return (process.cwd() + '/volume');
   },
   pasvPortRangeStart: 49152, //was 1025
   pasvPortRangeEnd: 65534, // was 1005
@@ -106,20 +104,6 @@ server.on('client:connected', function(connection) {
 });
 
 
-watch.watchTree(process.cwd() + '/public', function (f, curr, prev) {
-  if (typeof f == "object" && prev === null && curr === null) {
-    // Finished walking the tree
-     return;
-  } else if (prev === null) {
-    // f is a new file
-      console.log(f + "recieved."); 
-      py.createProcess(f);
-  } else if (curr.nlink === 0) {
-    // f was removed
-  } else {
-    // f was changed
-  }
-})
 
 server.debugging = 4;
 

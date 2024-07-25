@@ -2,6 +2,7 @@ FROM ultralytics/ultralytics:latest
 
 WORKDIR /app
 
+RUN pip install watchdog
 # Will run this commented section as part of a different docker that communicates via shared volumes
 
 # RUN python3 -m venv /app/VideoRecog/.venv && source /app/VideoRecog/.venv/bin/activate

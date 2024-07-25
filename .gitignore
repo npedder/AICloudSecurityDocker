@@ -1,0 +1,4 @@
+ftp/.env
+ftp/node_modules/
+ftp/key.pem
+ftp/cert.pem
