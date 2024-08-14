@@ -1,5 +1,5 @@
 # AI Cloud Security Docker
-A docker application that can recieve an image via a NodeJS FTP server container and predict the contents of the image using Ultralytics yolov8 detection module and report the findings back to the user.
+A docker application that can recieve an image via a NodeJS FTP server container and predict the contents of the image using Ultralytics yolov8 detection module and report the findings back to the user. Now with a simple WebGUI!
 
 ## Setup 
 In the Dockerfile within the ftp folder, change the environment variables according to your environment. The "key.pem" and "cert.pem" files will need to be created and placed in the ftp folder.
