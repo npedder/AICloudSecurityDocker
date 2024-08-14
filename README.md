@@ -32,7 +32,7 @@ docker compose up
 ```
 
 ## Usage
-Connect to the web gui using localhost:3000
+Connect to the web gui using localhost:3000.
 
 ## Warning:
 Proper ftp over tls has not yet been configured, so files sent over ftp are in unencrypted clear text. 
