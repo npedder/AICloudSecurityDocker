@@ -3,6 +3,7 @@ services:
     build: .\ftp
     ports:
       - "7010:7004"
+      - "3000:3000"
     volumes:
       - photos:/app/volume
   videorecognition:

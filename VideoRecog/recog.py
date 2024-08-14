@@ -22,7 +22,7 @@ def analyzePhoto(photoPath):
     if len(sys.argv) >= 1 :
         results = model.predict(source = [photoPath])
         #sys.stdout.flush()
-        print(results)
+        print(results[0].keypoints)
     else:
         print("NO ARG FOUND: : PRINTING DEFAULT")
 

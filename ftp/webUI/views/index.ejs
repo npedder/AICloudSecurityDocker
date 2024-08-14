@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Cloud Security</title>
+    <link rel="stylesheet" href="style/index.css">
+</head>
+
+<body>
+    <h1>
+        AI Cloud Security
+    </h1>
+
+    <script src = "scripts/changeImage.js"></script>
+
+    <div>
+        <img id = "img" src="volume/warioEnhancedx.jpg" alt = "wario 0" style = "height: 20vw;" class = "center"/>
+    </div>
+
+    <div> 
+        <% if(fileNames.length == 0) { %>
+                No images found.
+        <% } else{ %>
+            <% for(let i = 0; i < fileNames.length; i++){ %>
+                <img src = "volume/<%=fileNames[i]%>" alt="dog 1" style = "height: 20vw;" onclick = 'changeImage("volume/<%=fileNames[i]%>");'>
+            <% } %>
+        <% } %>
+    </div>
+    
+    <div>
+        <h2>Page <%=thispage%> of <%=numberofpages%></h2>
+        <nav> 
+            <a href="http://localhost:3000/<%=prevpage%>">
+                Prev
+            </a>
+            <% if(thispage != numberofpages){%>
+            |
+            <a href="http://localhost:3000/<%=nextpage%>">
+                Next
+            </a>
+            <% } %>
+        </nav>
+    
+    </div>
+    </body>
+    
+        
+</body>
+
+</html>
