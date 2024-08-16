@@ -3,14 +3,17 @@ import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from recog import *
+from database import *
+
+create_sqlite_database("photos.db")
 
 # event functions to be used in handler
 def onEventCreated(photoPath):
-    analyzePhoto(photoPath)
+    _analyzePhoto(photoPath)
     
 
 def onEventModified(photoPath):
-    analyzePhoto(photoPath)
+    _analyzePhoto(photoPath)
 
 
 class OnMyWatch:
