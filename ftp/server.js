@@ -10,7 +10,6 @@ const ftpApp = require('./ftpServer');
 
 
 
-
 app.set('port', process.env.PORT2 || 3000); //Access express's built in table of key-value pairs for config
 //                                           we create a port key, and set it to 3000 if not specified by process.env.PORT 
 //                                           Heroku can set env.PORT

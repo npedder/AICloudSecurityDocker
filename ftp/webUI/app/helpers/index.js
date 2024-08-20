@@ -1,6 +1,7 @@
 //Registers routes for the router
 'use strict';
 const router = require('express').Router();
+const databaseHandler = require('../database')
 
 //Iterate through the routes object and mount the route
 //Recursive 
@@ -41,11 +42,36 @@ let calcNumberOfPages = (numberOfItems, itemsPerPage) => {  //to determine how m
     return numPages;
 }
 
-
+let loadPhotoDataToArrayPromise = (fileNames) => {
+        return new Promise((resolve, reject) => {
+            let photosData = [];
+            for(let i = 0; i < fileNames.length; i++){
+                databaseHandler.getDataFromDatabasePromise("/app/volume/photos.db", fileNames[i])
+                 .then((dataReturned) => {
+                    
+                    photosData[i] = dataReturned;
+                    //console.log(photosData[i]);
+                    if (i == fileNames.length - 1){
+                        //console.log(photosData);
+                        resolve(photosData);
+                    }
+                 }, (error) => {
+                    reject(error);
+                 });
+                
+                //console.log(databaseHandler.getDataFromDatabase("/app/volume/photos.db", fileNames[i], photosData[i])); //undefined
+            }
+            // console.log(photosData);
+            // resolve(photosData);
+        })
+        
+    
+}
 
 
 
 module.exports = {  //exports the route function
     route,
-    calcNumberOfPages
+    calcNumberOfPages,
+    loadPhotoDataToArrayPromise
 }

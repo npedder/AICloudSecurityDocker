@@ -98,6 +98,12 @@ server.on('client:connected', function(connection) {
     } else {
       failure();
     }
+
+  connection.on('file:stor', (closeString) =>{ // will need to use this if switch from watchdog in python to streams for communication
+    if(closeString === 'close') 
+      console.log("!!!!!!!!!!!!!!!!!!!!file finished!!!!!!!!!!!!!!!!!!!!");
+  });
+    
  });
 });
 

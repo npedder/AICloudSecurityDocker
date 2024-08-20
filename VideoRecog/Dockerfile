@@ -22,6 +22,5 @@ RUN pip install watchdog
 
 COPY . . 
 
-CMD ["ls"]
 CMD ["python3", "main.py" , "/app/IMG_1302.JPEG"]
 

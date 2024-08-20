@@ -3,13 +3,14 @@
 'use strict';
 const h = require('../helpers');
 const path = require('path');
+const databaseHandler = require('../database')
 var fs = require('fs');
-// var fileNames = fs.readdirSync("app/webUI/public/images");
+
+
 var fileNames = fs.readdirSync("/app/volume/volume");
 console.log("FileName: ");
 console.log(fileNames);
 var itemsPerPage = 3;
-
 var numberOfPages = h.calcNumberOfPages(fileNames.length, itemsPerPage);
 
 
@@ -19,6 +20,7 @@ module.exports = () => {
             '/': (req, res, next) =>{
                 fileNames = fs.readdirSync("/app/volume/volume");
                 numberOfPages = h.calcNumberOfPages(fileNames.length, itemsPerPage);
+                let photosData = [];
                 res.render('index',{
                     fileNames: fileNames,
                     thispage: 1,
@@ -32,12 +34,21 @@ module.exports = () => {
                 fileNames = fs.readdirSync("/app/volume/volume");
                 numberOfPages = h.calcNumberOfPages(fileNames.length, itemsPerPage);
                 var fnamesTemp = fileNames.slice(0,3);
-                res.render('index',{
-                    fileNames: fnamesTemp,
-                    prevpage: 1, 
-                    thispage: 1,
-                    nextpage:2,
-                    numberofpages: numberOfPages     
+                let photosData = [];
+                h.loadPhotoDataToArrayPromise(fnamesTemp).then((arrayRecieved) => {
+                    photosData = arrayRecieved;
+                    //console.log(arrayRecieved);
+                    res.render('index',{
+                        fileNames: fnamesTemp,
+                        fileData: photosData,
+                        prevpage: 1, 
+                        thispage: 1,
+                        nextpage:2,
+                        numberofpages: numberOfPages,
+                        imageIndex: 0     
+                    });   
+                }, (error) =>{
+                    console.log("ERROR IN ROUTER PROMISE"+ error)
                 });
             },
             '/:id':(req, res, next) => {       
@@ -52,14 +63,23 @@ module.exports = () => {
                 var nextpage = parseInt(id) + 1; 
                 var prevpage = nextpage - 2;
                 var fnamesTemp = fileNames.slice(id*3 - 3, id * 3);
-
-                res.render('index',{
-                    fileNames: fnamesTemp,
-                    thispage: id,
-                    prevpage: prevpage,
-                    nextpage: nextpage,
-                    numberofpages: numberOfPages
-                 });
+                
+                let photosData = [];
+                h.loadPhotoDataToArrayPromise(fnamesTemp).then((arrayRecieved) => {
+                    photosData = arrayRecieved;
+                    //console.log(arrayRecieved);
+                    res.render('index',{
+                        fileNames: fnamesTemp,
+                        fileData: photosData,
+                        prevpage: prevpage, 
+                        thispage: id,
+                        nextpage:nextpage,
+                        numberofpages: numberOfPages,
+                        imageIndex: 0     
+                    });   
+                }, (error) =>{
+                    console.log("ERROR IN ROUTER PROMISE"+ error)
+                });
             }
         }, 
         'post':{

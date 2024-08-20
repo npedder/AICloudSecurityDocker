@@ -33,10 +33,10 @@ from photo import Photo
 # conn.close()
 
 def create_sqlite_database(filename):
-    conn = None
+    
     try: 
         conn = sqlite3.connect(filename)
-        print(sqlite3.sqlite_version)
+        print(sqlite3.sqlite_version, flush=True)
     except sqlite3.Error as e:
         print(e)
     finally:
@@ -48,26 +48,37 @@ def createPhotosTable(filename):
     try: 
         conn = sqlite3.connect(filename)
         c = conn.cursor()
-        c.execute("""CREATE TABLE photos (
+        c.execute(f"""CREATE TABLE IF NOT EXISTS photos (
           id integer,
           filename text, 
-          dogs integer
-          cats integer
-          persons integer
-          camera_id integer""")
+          dogs integer,
+          cats integer,
+          persons integer,
+          camera_id integer)""")
+        conn.commit()
     except sqlite3.Error as e:
-        print(e)
+        print("Error", e, flush=True)
     finally:
         if conn:
+            conn.commit()
             conn.close()
 
 
-def insertPhotoIntoDB(photo: Photo):
-    conn = sqlite3.connect("photos.db")
-    c = conn.cursor()
-    c.execute("INSERT INTO photos VALUES (?, ?, ?, ?, ?, ?)", (photo.id, photo.filename, photo.dogs, photo.cats, photo.persons, photo.camera_id))
-    conn.commit()
-    conn.close()
+def insertPhotoIntoTable(photo: Photo, dbFileName):
+    
+    try:
+        conn = sqlite3.connect(dbFileName)
+        c = conn.cursor()
+        print("inserting photo...", flush=True)
+        print(photo.__repr__, flush=True)
+        c.execute(f"""INSERT INTO photos VALUES (?, ?, ?, ?, ?, ?)""", (photo.id, photo.filename, photo.dogs, photo
+                                                                        .cats, photo.persons, photo.camera_id))
+        conn.commit()
+    except sqlite3.Error as e:
+        print("Error", e)
+    finally:
+        if conn:
+            conn.close()
 
 
 

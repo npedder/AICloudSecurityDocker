@@ -5,20 +5,30 @@ from watchdog.events import FileSystemEventHandler
 from recog import *
 from database import *
 
-create_sqlite_database("photos.db")
+dbFilePath = "/app/volume/photos.db"
+create_sqlite_database("/app/volume/photos.db")
+createPhotosTable("/app/volume/photos.db")
 
 # event functions to be used in handler
 def onEventCreated(photoPath):
-    _analyzePhoto(photoPath)
+    #_analyzePhoto(photoPath)
+	print("Sleeping for 2 seconds as file downloads...", flush=True)
+	time.sleep(2) #this is a bandage and not a real fix. This sleep would need to be modified depending on filesize and download speed
+	photo = createObjectFromPhotoAnalysis(photoPath)
+	insertPhotoIntoTable(photo, dbFilePath)
+
     
 
 def onEventModified(photoPath):
-    _analyzePhoto(photoPath)
+    #_analyzePhoto(photoPath)
+	# photo = createObjectFromPhotoAnalysis(photoPath)
+	# insertPhotoIntoTable(photo)
+	print("Doing nothing on modification...")
 
 
 class OnMyWatch:
 	# Set the directory on watch
-	watchDirectory = "/app/volume/"
+	watchDirectory = "/app/volume/volume"
 
 	def __init__(self):
 		self.observer = Observer()

@@ -14,14 +14,22 @@
 
     <div>
         <img id = "img" src="volume/<%=fileNames[0]%>" alt = "wario 0" style = "height: 20vw;" class = "center"/>
+        <ul style="list-style-type:none;" class = "description">
+            <% if (typeof fileData !== 'undefined'){ %>
+            <li id = "fileNameText">Image: <%=fileData[0].fileName%> </li>
+            <li id = "dogsText">Dogs detected: <%=fileData[0].dogs%> </li>
+            <li id = "catsText">Cats detected: <%=fileData[0].cats%> </li>
+            <li id = "personsText">Persons detected: <%=fileData[0].persons%> </li>
+            <% } %>
+          </ul>  
     </div>
 
     <div> 
         <% if(fileNames.length == 0) { %>
                 No images found.
-        <% } else{ %>
+        <% } else if(typeof fileData !== 'undefined'){ %>
             <% for(let i = 0; i < fileNames.length; i++){ %>
-                <img src = "volume/<%=fileNames[i]%>" alt="dog 1" style = "height: 20vw;" onclick = 'changeImage("volume/<%=fileNames[i]%>");'>
+                <img src = "volume/<%=fileNames[i]%>" alt="dog 1" style = "height: 20vw;" onclick = 'changeImage("volume/<%=fileNames[i]%>", "<%=fileData[i].fileName%>", <%=fileData[i].dogs%>, <%=fileData[i].cats%>, <%=fileData[i].persons%>);'>
             <% } %>
         <% } %>
     </div>

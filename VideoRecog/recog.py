@@ -14,16 +14,24 @@ model = YOLO('yolov8n.pt')  # load an official detection model
 def _analyzePhoto(photoPath): # Returns results of analysis as a string in JSON format
     if len(sys.argv) >= 1 :#remove 
         #sys.stdout.flush()
-        results = model.predict(source = [photoPath], classes = [0,15,16]) #classes 0, 15, and 16 coorelate to person, dog, and cat respectively in the coco.yaml file from ultralytics github
-        json_result = results[0].tojson()
-        print("printing json...", flush = True)
-        print(json_result, flush = True)
-        return(json_result)
+        results = None
+        try:
+            results = model.predict(source = [photoPath], classes = [0,15,16]) #classes 0, 15, and 16 coorelate to person, dog, and cat respectively in the coco.yaml file from ultralytics github
+            json_result = results[0].tojson()
+            print("printing json...", flush = True)
+            print(json_result, flush = True)
+            return(json_result)
+        except Exception as e: 
+            print ("Error predicting:", e, flush=True)
+            
     else:
         print("NO ARG FOUND: : PRINTING DEFAULT")
 
 def createObjectFromPhotoAnalysis(photoPath):
     json_result = _analyzePhoto(photoPath)
+    if json_result == None:
+        print("ERROR: json result is none!", flush =True)
+        return Photo(0,"",0,0,0,0)
     dict_results = json.loads(json_result) # a list of dictionaries
 
     cats = 0; 
@@ -40,9 +48,9 @@ def createObjectFromPhotoAnalysis(photoPath):
     photo = Photo(-1, photoPath, dogs, cats, persons, -1 ) # unique photoId should be generated during sql insertion command i think???
     return photo
 
-
-_analyzePhoto("dogcatperson.jpg")
-print(createObjectFromPhotoAnalysis("dogcatperson.jpg").__repr__, flush= True)
+#  For testing:
+# _analyzePhoto("dogcatperson.jpg")
+# print(createObjectFromPhotoAnalysis("dogcatperson.jpg").__repr__, flush= True)
 
 
 
