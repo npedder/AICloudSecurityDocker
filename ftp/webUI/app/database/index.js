@@ -14,7 +14,7 @@ let getDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
                         reject(err);
                     } else{
                         let photo = new Photo(row.id, row.filename, row.dogs, row.cats, row.persons, row.camera_id);
-                        console.log(photo);
+                        //console.log(photo);
                         resolve(photo);
                     }
                     

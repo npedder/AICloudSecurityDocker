@@ -44,26 +44,41 @@ let calcNumberOfPages = (numberOfItems, itemsPerPage) => {  //to determine how m
 
 let loadPhotoDataToArrayPromise = (fileNames) => {
         return new Promise((resolve, reject) => {
-            let photosData = [];
+            let photosData = []; 
+            let queriesCompleted = 0;
             for(let i = 0; i < fileNames.length; i++){
                 databaseHandler.getDataFromDatabasePromise("/app/volume/photos.db", fileNames[i])
                  .then((dataReturned) => {
                     
                     photosData[i] = dataReturned;
                     //console.log(photosData[i]);
-                    if (i == fileNames.length - 1){
-                        //console.log(photosData);
+                    console.log("FILENAMES LENGTH: "+ fileNames.length + ", I : " + i);
+                    queriesCompleted +=1;
+                    console.log("QueriesCompleted:" + queriesCompleted);
+
+                    if(queriesCompleted == fileNames.length){
+                        console.log(photosData);
                         resolve(photosData);
                     }
+
                  }, (error) => {
+                    queriesCompleted +=1;
+                    console.log('error');
                     reject(error);
                  });
-                
-                //console.log(databaseHandler.getDataFromDatabase("/app/volume/photos.db", fileNames[i], photosData[i])); //undefined
+                 
+            
             }
-            // console.log(photosData);
-            // resolve(photosData);
-        })
+
+            setTimeout(() =>{
+              if (queriesCompleted != fileNames.length){
+                console.log("Timed out");
+                reject('Timeout');
+            }
+            }, 6000);
+
+                
+        });
         
     
 }

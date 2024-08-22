@@ -19,7 +19,7 @@ var options = {
 
 
 if (process.env.KEY_FILE && process.env.CERT_FILE) {
-  console.log('Running as FTPS server');
+  console.log('WARNING: Running as plain FTP server');
   if (process.env.KEY_FILE.charAt(0) !== '/') {
     keyFile = path.join(__dirname, process.env.KEY_FILE);
   }
@@ -99,10 +99,10 @@ server.on('client:connected', function(connection) {
       failure();
     }
 
-  connection.on('file:stor', (closeString) =>{ // will need to use this if switch from watchdog in python to streams for communication
-    if(closeString === 'close') 
-      console.log("!!!!!!!!!!!!!!!!!!!!file finished!!!!!!!!!!!!!!!!!!!!");
-  });
+  // connection.on('file:stor', (closeString) =>{ // will need to use this if switch from watchdog in python to streams for communication
+  //   if(closeString === 'close') 
+  //     console.log("!!!!!!!!!!!!!!!!!!!!file finished!!!!!!!!!!!!!!!!!!!!");
+  // });
     
  });
 });

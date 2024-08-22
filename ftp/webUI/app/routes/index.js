@@ -67,7 +67,8 @@ module.exports = () => {
                 let photosData = [];
                 h.loadPhotoDataToArrayPromise(fnamesTemp).then((arrayRecieved) => {
                     photosData = arrayRecieved;
-                    //console.log(arrayRecieved);
+                   // console.log("ARRAY RECIEVED IN ROUtes");
+                   // console.log(arrayRecieved);
                     res.render('index',{
                         fileNames: fnamesTemp,
                         fileData: photosData,
