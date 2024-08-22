@@ -34,7 +34,9 @@ docker compose up
 ## Usage
 ### Sending files via ftp
 The ftp server will be compatible with most modern ftp clients. 
+
 In your client of choice, set the ip address of the server to the local ip address of your host machine. Set the port to the mapping defined in the compose.yaml file (defaults to 7010). 
+
 The username and password of the ftp user are defined in the "ftp/Dockerfile" file. As of now, this cannot be changed after building the container. The default username is ftpuser and the default password is pass. 
 
 ### Accessing the user interface
@@ -42,6 +44,7 @@ Connect to the web gui using localhost:3000 in your web browser.
 
 ### Locating images
 All the images recieved via ftp will be stored in the photos volume defined in the compose.yaml. 
+
 An SQLite database file titled "photos.db" will also be in this volume.
 
 ## Warning:
