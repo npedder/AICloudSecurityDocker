@@ -1,5 +1,5 @@
 # AI Cloud Security Docker
-A docker application that can recieve an image via a NodeJS FTP server container and predict the contents of the image using Ultralytics yolov8 detection module and report the findings back to the user. Now with a simple WebGUI!
+A docker application that can recieve an image via a NodeJS FTP server container, predict the contents of the image using Ultralytics yolov8 detection module, and report the findings back to the user. Now with a simple WebGUI!
 
 ## Setup 
 In the Dockerfile within the ftp folder, change the environment variables according to your environment. The "key.pem" and "cert.pem" files will need to be created and placed in the ftp folder.
@@ -32,7 +32,20 @@ docker compose up
 ```
 
 ## Usage
-Connect to the web gui using localhost:3000.
+### Sending files via ftp
+The ftp server will be compatible with most modern ftp clients. 
+
+In your client of choice, set the ip address of the server to the local ip address of your host machine. Set the port to the mapping defined in the compose.yaml file (defaults to 7010). 
+
+The username and password of the ftp user are defined in the "ftp/Dockerfile" file. As of now, this cannot be changed after building the container. The default username is ftpuser and the default password is pass. 
+
+### Accessing the user interface
+Connect to the web gui using localhost:3000 in your web browser.
+
+### Locating images
+All the images recieved via ftp will be stored in the photos volume defined in the compose.yaml. 
+
+An SQLite database file titled "photos.db" will also be in this volume.
 
 ## Warning:
 Proper ftp over tls has not yet been configured, so files sent over ftp are in unencrypted clear text. 
