@@ -80,6 +80,10 @@ module.exports = () => {
                     });   
                 }, (error) =>{
                     console.log("ERROR IN ROUTER PROMISE"+ error)
+                    if (error == 'Timeout'){
+                        console.log("Deleting database to rebuild...");
+                        fs.rm("/app/volume/photos.db");
+                    }
                 });
             }
         }, 
