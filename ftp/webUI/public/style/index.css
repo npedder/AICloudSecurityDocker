@@ -10,3 +10,9 @@
   margin-right: auto;
   font-size: large;
 }
+
+.rebuildButton{
+  display: inline-block;
+  margin-left: 800px;
+  margin-right: auto;
+}

@@ -1,7 +1,8 @@
 //Registers routes for the router
 'use strict';
 const router = require('express').Router();
-const databaseHandler = require('../database')
+const databaseHandler = require('../database');
+const fs = require('fs');
 
 //Iterate through the routes object and mount the route
 //Recursive 
@@ -80,13 +81,18 @@ let loadPhotoDataToArrayPromise = (fileNames) => {
                 
         });
         
-    
 }
 
+let deleteFile = (filePath) =>{
+    fs.rm(filePath, (error) => {
+        console.log("ERROR: " + error);
+    });
+}
 
 
 module.exports = {  //exports the route function
     route,
     calcNumberOfPages,
-    loadPhotoDataToArrayPromise
+    loadPhotoDataToArrayPromise,
+    deleteFile
 }

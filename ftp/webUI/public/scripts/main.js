@@ -1,6 +1,15 @@
 // var fs = require('fs');
 // var files = fs.readdirSync('./images/');
 
+const socket = io();
+
+socket.on('connection');
+
+socket.on('rebuild')
+
+function sendRebuild(){
+    socket.emit('rebuild', "This is data i sent");
+}
 
 function changeImage(a ,fileName, numberOfDogs, numberOfCats, numberOfPersons){
     document.getElementById("img").src = a;
@@ -10,6 +19,8 @@ function changeImage(a ,fileName, numberOfDogs, numberOfCats, numberOfPersons){
     document.getElementById("personsText").textContent = "Persons detected: "  + numberOfPersons;
     console.log("INDEX: " + index)
 }
+
+
 
 // function printAllImages(){
 //     console.log("all imgages:");

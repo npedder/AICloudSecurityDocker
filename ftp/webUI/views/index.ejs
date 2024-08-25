@@ -3,6 +3,8 @@
 <head>
     <title>AI Cloud Security</title>
     <link rel="stylesheet" href="style/index.css">
+    <script src = "/socket.io/socket.io.js"></script>
+
 </head>
 
 <body>
@@ -10,7 +12,7 @@
         AI Cloud Security
     </h1>
 
-    <script src = "scripts/changeImage.js"></script>
+    <script src = "scripts/main.js"></script>
 
     <div>
         <img id = "img" src="volume/<%=fileNames[0]%>" alt = "wario 0" style = "height: 20vw;" class = "center"/>
@@ -47,8 +49,12 @@
             </a>
             <% } %>
         </nav>
-    
+        
+        <button type="button" onclick="sendRebuild()" class ="rebuildButton">Rebuild</button>
     </div>
+
+    
+
     </body>
     
         
