@@ -18,13 +18,6 @@ let getDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
                         resolve(photo);
                     }
                     
-                    // photo.id = row.id;  
-                    // photo.fileName = row.filename;
-                    // photo.dogs = row.dogs;
-                    // photo.cats = row.cats;
-                    // photo.persons = row.persons;
-                    // photo.cameraId= row.camera_id;
-                    // console.log(photo);
                 })
             } else {
                 reject('No db file found');
@@ -32,8 +25,25 @@ let getDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
     })
 }
 
+//Adds a 
+let addCameraToDatabase = (databaseFilePath, cameraIP) => {
+        if(fs.existsSync(databaseFilePath))
+            {
+                const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
+                console.log('INSERT INTO cameras(camera_id, location, ip) VALUES(?, ?, ?)');
+                db.run('INSERT INTO cameras(camera_id, location, ip) VALUES(?, ?, ?)', [-1,"", cameraIP], (err) => {
+                    if(err) {
+                        console.error(err.message);
+                        return(null);
+                    }
+                });
+            } else {
+                console.log("Error:no database found");
+            }
+}
+
 // Photos class contains the data of one element to be stored in the photos table of the database
-class Photo{        // Default constructor
+class Photo{        
     constructor(id, fileName, dogs, cats, persons, cameraId){
         if (arguments.length == 6){
             this.id = id;
@@ -53,9 +63,23 @@ class Photo{        // Default constructor
     }
 }
 
+class Camera{
+    constructor(camera_id, location, ip){
+        if (arguments.length == 3){
+            this.id = id;
+            this.location  = location;
+            this.ip = ip;
+        } else { // Load default photo 
+            this.camera_id = -1;
+            this.fileName = "";
+            this.ip = "";
+        }   
+    }
+}
     
 
 module.exports = {
     getDataFromDatabasePromise,
+    addCameraToDatabase, 
     Photo
 }

@@ -36,6 +36,23 @@ def createPhotosTable(filename):
             conn.commit()
             conn.close()
 
+def createCamerasTable(filename):
+    conn = None
+    try: 
+        conn = sqlite3.connect(filename)
+        c = conn.cursor()
+        c.execute(f"""CREATE TABLE IF NOT EXISTS cameras (
+          camera_id integer,
+          location text,    
+          ip text)""")
+        conn.commit()
+    except sqlite3.Error as e:
+        print("Error", e, flush=True)
+    finally:
+        if conn:
+            conn.commit()
+            conn.close()
+
 
 def insertPhotoIntoTable(photo: Photo, dbFileName):
     

@@ -5,6 +5,7 @@
 require('dotenv').config('/.env')
 var ftpd = require('ftpd');
 var fs = require('fs');
+const db = require('../webUI/app/database');
 
 
 var path = require('path');
@@ -78,7 +79,10 @@ server.on('error', function(error) {
 
 server.on('client:connected', function(connection) {
   var username = null;
-  console.log('client connected: ' + connection.remoteAddress);
+
+  console.log('client connected: ' + connection.socket.remoteAddress);
+  db.addCameraToDatabase("/app/volume/photos.db", connection.socket.remoteAddress);
+
   connection.on('command:user', function(user, success, failure) {
 
     if (user) {

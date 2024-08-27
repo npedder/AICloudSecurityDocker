@@ -9,6 +9,7 @@ import os
 dbFilePath = "/app/volume/photos.db"
 create_sqlite_database("/app/volume/photos.db")
 createPhotosTable("/app/volume/photos.db")
+createCamerasTable("/app/volume/photos.db")
 
 
 
