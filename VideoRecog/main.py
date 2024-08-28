@@ -19,6 +19,7 @@ def rebuildDatabaseFromPhotosFolder(folderPath):
     for photoName in photosInDirectory:
         photo = createObjectFromPhotoAnalysis("/app/volume/volume/" + photoName)
         insertPhotoIntoTable(photo, dbFilePath)
+		
 
 
 # event functions to be used in handler
@@ -40,6 +41,7 @@ def onEventDeleted(filePath):
 		print("Database deleted: rebuilding...")
 		create_sqlite_database("/app/volume/photos.db")
 		createPhotosTable("/app/volume/photos.db")
+		createCamerasTable("/app/volume/photos.db")
 		rebuildDatabaseFromPhotosFolder("/app/volume/volume")
 	elif filePath == "/app/volume/photos.db-journal":
 		return None

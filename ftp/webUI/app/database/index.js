@@ -30,8 +30,8 @@ let addCameraToDatabase = (databaseFilePath, cameraIP) => {
         if(fs.existsSync(databaseFilePath))
             {
                 const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
-                console.log('INSERT INTO cameras(camera_id, location, ip) VALUES(?, ?, ?)');
-                db.run('INSERT INTO cameras(camera_id, location, ip) VALUES(?, ?, ?)', [-1,"", cameraIP], (err) => {
+                console.log('INSERT INTO cameras(location, ip) VALUES(?, ?)');
+                db.run('INSERT INTO cameras(location, ip) VALUES(?, ?)', ["", cameraIP], (err) => {
                     if(err) {
                         console.error(err.message);
                         return(null);

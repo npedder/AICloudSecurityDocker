@@ -22,7 +22,7 @@ def createPhotosTable(filename):
         conn = sqlite3.connect(filename)
         c = conn.cursor()
         c.execute(f"""CREATE TABLE IF NOT EXISTS photos (
-          id integer,
+          id integer PRIMARY KEY,
           filename text, 
           dogs integer,
           cats integer,
@@ -42,7 +42,7 @@ def createCamerasTable(filename):
         conn = sqlite3.connect(filename)
         c = conn.cursor()
         c.execute(f"""CREATE TABLE IF NOT EXISTS cameras (
-          camera_id integer,
+          camera_id integer PRIMARY KEY,
           location text,    
           ip text)""")
         conn.commit()
@@ -61,8 +61,7 @@ def insertPhotoIntoTable(photo: Photo, dbFileName):
         c = conn.cursor()
         print("inserting photo...", flush=True)
         print(photo.__repr__, flush=True)
-        c.execute(f"""INSERT INTO photos VALUES (?, ?, ?, ?, ?, ?)""", (photo.id, photo.filename, photo.dogs, photo
-                                                                        .cats, photo.persons, photo.camera_id))
+        c.execute(f"""INSERT INTO photos (filename, dogs, cats, persons, camera_id) VALUES (?, ?, ?, ?, ?)""", (photo.filename, photo.dogs, photo.cats, photo.persons, photo.camera_id))
         conn.commit()
     except sqlite3.Error as e:
         print("Error", e)
