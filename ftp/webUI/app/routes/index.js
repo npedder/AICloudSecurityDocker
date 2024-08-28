@@ -54,6 +54,23 @@ module.exports = () => {
                         fs.rm("/app/volume/photos.db");
                     }
                 });
+            },'/cameras':(req,res, next) => {
+                console.log("HHHHHHHHEEEEEEEEEEEEEELLLLLLLLLLLLLp");
+                let cameras = [];
+                h.loadCamerasDataToArrayPromise().then((arrayRecieved) => {
+                    cameras = arrayRecieved;
+                    console.log( cameras);
+                   // console.log("ARRAY RECIEVED IN ROUtes");
+                   // console.log(arrayRecieved);
+                    res.render('cameras',{
+                        cameras: cameras,
+                    });   
+                }, (error) =>{
+                    console.log("ERROR IN ROUTER PROMISE"+ error);
+                    if (error == 'Timeout'){
+                        res.status(404).sendFile(process.cwd() + '/webUI/views/404.htm');
+                    }
+                });
             },
             '/:id':(req, res, next) => {       
                 fileNames = fs.readdirSync("/app/volume/volume"); 

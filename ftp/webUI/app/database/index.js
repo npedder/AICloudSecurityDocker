@@ -2,13 +2,13 @@
 const sqlite3 = require('sqlite3').verbose();
 var fs = require('fs');
 
-let getDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
+let getPhotosDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
     return new Promise((resolve, reject) => {
         if(fs.existsSync(databaseFilePath))
             {
                 const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
                 console.log("SELECT DISTINCT * FROM photos WHERE filename LIKE '%" + photoFilePath + "%'")
-                db.each("SELECT DISTINCT * FROM photos WHERE filename LIKE '%" + photoFilePath + "%'", (err, row)=>{
+                db.each("SELECT DISTINCT * FROM photos WHERE filename LIKE '%" + photoFilePath + "%'", (err, row)=>{ //This might not have to be db each
                     if(err){
                         console.error(err.message);
                         reject(err);
@@ -40,6 +40,31 @@ let addCameraToDatabase = (databaseFilePath, cameraIP) => {
             } else {
                 console.log("Error:no database found");
             }
+}
+
+
+
+let getCamerasDataFromDatabasePromise = (databaseFilePath) =>{
+    return new Promise((resolve, reject) => {
+        if(fs.existsSync(databaseFilePath))
+            {
+                const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
+                let queryText = "SELECT * FROM cameras LIMIT 20";
+                console.log(queryText);
+                db.all(queryText, (err, rows)=>{
+                    if(err){
+                        console.error(err.message);
+                        reject(err);
+                    } else{
+                        console.log(rows);
+                        resolve(rows);
+                    }
+                    
+                })
+            } else {
+                reject('No db file found');
+            }
+    })
 }
 
 // Photos class contains the data of one element to be stored in the photos table of the database
@@ -79,7 +104,8 @@ class Camera{
     
 
 module.exports = {
-    getDataFromDatabasePromise,
-    addCameraToDatabase, 
+    getPhotosDataFromDatabasePromise,
+    addCameraToDatabase,
+    getCamerasDataFromDatabasePromise,
     Photo
 }

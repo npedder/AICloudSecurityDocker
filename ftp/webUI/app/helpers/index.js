@@ -48,7 +48,7 @@ let loadPhotoDataToArrayPromise = (fileNames) => {
             let photosData = []; 
             let queriesCompleted = 0;
             for(let i = 0; i < fileNames.length; i++){
-                databaseHandler.getDataFromDatabasePromise("/app/volume/photos.db", fileNames[i])
+                databaseHandler.getPhotosDataFromDatabasePromise("/app/volume/photos.db", fileNames[i])
                  .then((dataReturned) => {
                     
                     photosData[i] = dataReturned;
@@ -83,6 +83,20 @@ let loadPhotoDataToArrayPromise = (fileNames) => {
         
 }
 
+
+
+let loadCamerasDataToArrayPromise = () => { // a wrapper for getCameraDataFromDatabasePromise
+    return new Promise((resolve, reject) => {
+        databaseHandler.getCamerasDataFromDatabasePromise("/app/volume/photos.db")
+         .then((dataReturned) =>{
+            resolve(dataReturned)
+        }, (error) => {
+            reject(error)
+        });
+
+    });
+}
+
 let deleteFile = (filePath) =>{
     fs.rm(filePath, (error) => {
         console.log("ERROR: " + error);
@@ -94,5 +108,6 @@ module.exports = {  //exports the route function
     route,
     calcNumberOfPages,
     loadPhotoDataToArrayPromise,
+    loadCamerasDataToArrayPromise,
     deleteFile
 }

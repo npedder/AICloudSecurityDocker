@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Cloud Security</title>
+    <link rel="stylesheet" href="style/index.css">
+    <script src = "/socket.io/socket.io.js"></script>
+
+</head>
+
+<body>
+    <h1>
+        AI Cloud Security
+    </h1>
+
+    <script src = "scripts/main.js"></script>
+
+    
+
+    <div>  
+        <% for(let i = 0; i < cameras.length; i++){ %>
+            <ul style = "margin-top: 3px;">
+                <li>ID: <%=cameras[i].camera_id%></li>
+                <% if (cameras[i].location === ""){ %>
+                        <li>Location: no location set</li>
+                <% } else{ %>
+                        <li>Location: </li>
+                    <li>Location: <%=cameras[i].location%></li>
+                <li>IP: <%=cameras[i].ip%></li>
+            <% } %>
+            </ul>
+        <% } %>
+        
+    </div>
+
+    <div>
+        <nav> 
+            <a href="http://localhost:3000/">
+                Photos
+            </a>
+        </nav>
+
+
+    </div>
+
+    
+
+    </body>
+    
+        
+</body>
+
+</html>
