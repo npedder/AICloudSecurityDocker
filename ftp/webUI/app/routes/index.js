@@ -17,17 +17,8 @@ var numberOfPages = h.calcNumberOfPages(fileNames.length, itemsPerPage);
 module.exports = () => {
     let routes = {
         'get': {
-            '/': (req, res, next) =>{
-                fileNames = fs.readdirSync("/app/volume/volume");
-                numberOfPages = h.calcNumberOfPages(fileNames.length, itemsPerPage);
-                let photosData = [];
-                res.render('index',{
-                    fileNames: fileNames,
-                    thispage: 1,
-                    prevpage:  1,
-                    nextpage: 2,
-                    numberofpages: numberOfPages                 
-                });
+            '/': (req, res, next) =>{           
+                res.redirect('1');
             },
 
             '/1': (req, res, next) =>{
@@ -55,7 +46,6 @@ module.exports = () => {
                     }
                 });
             },'/cameras':(req,res, next) => {
-                console.log("HHHHHHHHEEEEEEEEEEEEEELLLLLLLLLLLLLp");
                 let cameras = [];
                 h.loadCamerasDataToArrayPromise().then((arrayRecieved) => {
                     cameras = arrayRecieved;

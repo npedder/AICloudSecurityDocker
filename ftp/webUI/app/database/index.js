@@ -67,6 +67,26 @@ let getCamerasDataFromDatabasePromise = (databaseFilePath) =>{
     })
 }
 
+let changeCameraLocation = (databaseFilePath, camera_id, location) => {
+    if(fs.existsSync(databaseFilePath))
+        {
+            const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
+            let queryText = "UPDATE cameras \
+            SET location = (?) \
+            WHERE \
+                camera_id = (?);"
+
+            db.run(queryText, [location, camera_id], (err) => {
+                if(err) {
+                    console.error(err.message);
+                    return(null);
+                }
+            });
+        } else {
+            console.log("Error:no database found");
+        }
+}
+
 // Photos class contains the data of one element to be stored in the photos table of the database
 class Photo{        
     constructor(id, fileName, dogs, cats, persons, cameraId){
@@ -107,5 +127,6 @@ module.exports = {
     getPhotosDataFromDatabasePromise,
     addCameraToDatabase,
     getCamerasDataFromDatabasePromise,
+    changeCameraLocation,
     Photo
 }

@@ -14,20 +14,20 @@
 
     <script src = "scripts/main.js"></script>
 
-    
 
     <div>  
         <% for(let i = 0; i < cameras.length; i++){ %>
             <ul style = "margin-top: 3px;">
                 <li>ID: <%=cameras[i].camera_id%></li>
                 <% if (cameras[i].location === ""){ %>
-                        <li>Location: no location set</li>
-                <% } else{ %>
-                        <li>Location: </li>
-                    <li>Location: <%=cameras[i].location%></li>
-                <li>IP: <%=cameras[i].ip%></li>
+                    <li id="locationText<%=i%>"> Location: no location set</li>
+                <% } else{ %> 
+                    <li id="locationText<%=i%>">Location: <%=cameras[i].location%></li>         
             <% } %>
+                <li >IP: <%=cameras[i].ip%></li>
             </ul>
+            <input id="locationInput<%=i%>" type="text"> Change Camera Location </input>
+            <button onclick='submitLocation(<%=i%>, <%=cameras[i].camera_id%>)'> Submit </button>
         <% } %>
         
     </div>

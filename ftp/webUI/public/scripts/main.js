@@ -5,7 +5,7 @@ const socket = io();
 
 socket.on('connection');
 
-socket.on('rebuild')
+socket.on('rebuild');
 
 function sendRebuild(){
     socket.emit('rebuild', "This is data i sent");
@@ -20,7 +20,13 @@ function changeImage(a ,fileName, numberOfDogs, numberOfCats, numberOfPersons){
     console.log("INDEX: " + index)
 }
 
-
+function submitLocation(i, camera_id){
+    let locationText = document.getElementById("locationInput" + i).value;
+    document.getElementById("locationText" + i).textContent = "Location: " + locationText;
+    socket.emit('changeCameraLocation', camera_id, locationText);
+}   
+    
+   
 
 // function printAllImages(){
 //     console.log("all imgages:");
