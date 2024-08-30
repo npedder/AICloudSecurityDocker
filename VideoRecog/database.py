@@ -44,7 +44,7 @@ def createCamerasTable(filename):
         c.execute(f"""CREATE TABLE IF NOT EXISTS cameras (
           camera_id integer PRIMARY KEY,
           location text,    
-          ip text)""")
+          ip text UNIQUE)""")
         conn.commit()
     except sqlite3.Error as e:
         print("Error", e, flush=True)
