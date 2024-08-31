@@ -1,7 +1,7 @@
 'use strict';
 const sqlite3 = require('sqlite3').verbose();
 var fs = require('fs');
-
+var currentIP = "";
 let getPhotosDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
     return new Promise((resolve, reject) => {
         if(fs.existsSync(databaseFilePath))
@@ -29,6 +29,7 @@ let getPhotosDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
 let addCameraToDatabase = (databaseFilePath, cameraIP) => {
         if(fs.existsSync(databaseFilePath))
             {
+                currentIP = cameraIP;
                 const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
                 console.log('INSERT INTO cameras(location, ip) VALUES(?, ?)');
                 db.run('INSERT INTO cameras(location, ip) VALUES(?, ?)', ["", cameraIP], (err) => {
@@ -87,16 +88,41 @@ let changeCameraLocation = (databaseFilePath, camera_id, location) => {
         }
 }
 
+
+let getCameraIDFromDatabasePromise = (databaseFilePath) =>{
+    return new Promise((resolve, reject) => {
+        if(fs.existsSync(databaseFilePath))
+            {
+                const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
+                console.log("CURRENT IP: " + currentIP);
+                let queryText = "SELECT * FROM cameras WHERE ip LIKE '%" + currentIP + "%'";
+                console.log(queryText);
+                db.all(queryText, (err, rows)=>{
+                    if(err){
+                        console.error(err.message);
+                        reject(err);
+                    } else{
+                        console.log(rows);
+                        resolve(rows[0].camera_id);
+                    }
+                    
+                })
+            } else {
+                reject('No db file found');
+            }
+    })
+}
+
 // Photos class contains the data of one element to be stored in the photos table of the database
 class Photo{        
-    constructor(id, fileName, dogs, cats, persons, cameraId){
+    constructor(id, fileName, dogs, cats, persons, camera_id){
         if (arguments.length == 6){
             this.id = id;
             this.fileName = fileName;
             this.dogs = dogs;
             this.cats= cats;
             this.persons= persons; 
-            this.cameraId= cameraId;
+            this.camera_id= camera_id;
         } else { // Load default photo 
             this.id = -1;
             this.fileName = "";
@@ -124,9 +150,11 @@ class Camera{
     
 
 module.exports = {
+    currentIP,
     getPhotosDataFromDatabasePromise,
     addCameraToDatabase,
     getCamerasDataFromDatabasePromise,
+    getCameraIDFromDatabasePromise,
     changeCameraLocation,
     Photo
 }

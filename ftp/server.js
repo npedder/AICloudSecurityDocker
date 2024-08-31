@@ -6,9 +6,15 @@ const app = express();
 const path = require('path');
 const webUI = require('./webUI/app'); 
 const ftpApp = require('./ftpServer');
+const fs = require('fs');
 
 
+if (!fs.existsSync("/app/volume/volume")){  //needed if /volume is destroyed in the volume 
+    fs.mkdir("/app/volume/volume", (error) => {
+        console.log(error);
+    });
 
+}
 
 app.set('port', process.env.PORT2 || 3000); 
 

@@ -19,9 +19,11 @@
         <ul style="list-style-type:none;" class = "description">
             <% if (typeof fileData !== 'undefined'){ %>
             <li id = "fileNameText">Image: <%=fileData[0].fileName%> </li>
+            <li id = "camera_idText">Camera: <%=fileData[0].camera_id%> </li>
             <li id = "dogsText">Dogs detected: <%=fileData[0].dogs%> </li>
             <li id = "catsText">Cats detected: <%=fileData[0].cats%> </li>
             <li id = "personsText">Persons detected: <%=fileData[0].persons%> </li>
+            
             <% } %>
           </ul>  
     </div>

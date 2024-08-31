@@ -41,8 +41,8 @@ module.exports = () => {
                 }, (error) =>{
                     console.log("ERROR IN ROUTER PROMISE"+ error);
                     if (error == 'Timeout'){
-                        console.log("Deleting database to rebuild...");
-                        h.deleteFile("/app/volume/photos.db");
+                        // console.log("Deleting database to rebuild...");
+                        // h.deleteFile("/app/volume/photos.db");
                     }
                 });
             },'/cameras':(req,res, next) => {
@@ -92,8 +92,8 @@ module.exports = () => {
                 }, (error) =>{
                     console.log("ERROR IN ROUTER PROMISE"+ error);
                     if (error == 'Timeout'){
-                        console.log("Deleting database to rebuild...");
-                        h.deleteFile("/app/volume/photos.db");
+                        // console.log("Deleting database to rebuild...");
+                        // h.deleteFile("/app/volume/photos.db");
                     }
                 });
             }

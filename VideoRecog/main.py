@@ -4,13 +4,13 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from recog import *
 from database import *
+from sockets import *
 import os
 
 dbFilePath = "/app/volume/photos.db"
 create_sqlite_database("/app/volume/photos.db")
 createPhotosTable("/app/volume/photos.db")
 createCamerasTable("/app/volume/photos.db")
-
 
 
 
@@ -24,12 +24,13 @@ def rebuildDatabaseFromPhotosFolder(folderPath):
 
 # event functions to be used in handler
 def onEventCreated(photoPath):
-	if photoPath == "/app/volume/photos.db" or photoPath == "/app/volume/photos.db" or "/app/volume/photos.db-journal":
+	if photoPath == "/app/volume/photos.db" or photoPath == "/app/volume/photos.db-journal":
 		return None
 	else:
 		print("Sleeping for 2 seconds as file downloads...", flush=True)
 		time.sleep(2) #this is a bandage and not a real fix. This sleep would need to be modified depending on filesize and download speed
 		photo = createObjectFromPhotoAnalysis(photoPath)
+		photo.camera_id = requestCurrentCameraID()
 		insertPhotoIntoTable(photo, dbFilePath)
     
 

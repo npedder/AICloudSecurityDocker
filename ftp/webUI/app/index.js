@@ -10,7 +10,7 @@ let ioServer = app => {
     return server;
 }
 
-module.exports = {  //makes this a module
+module.exports = {  
     router: require('./routes')(), 
     ioServer,
 }

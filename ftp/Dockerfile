@@ -12,6 +12,7 @@ RUN npm install
 
 COPY . . 
 
+
 ENV IP = '10.0.0.251'
 ENV PORT=7004
 ENV PORT2=3000

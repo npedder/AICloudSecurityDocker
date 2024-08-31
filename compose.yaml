@@ -10,5 +10,7 @@ services:
       build: .\VideoRecog
       volumes:
       - photos:/app/volume
+      stdin_open: true 
+      tty: true
 volumes:
   photos:
