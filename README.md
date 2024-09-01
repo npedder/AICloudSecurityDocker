@@ -1,5 +1,5 @@
 # AI Cloud Security Docker
-A docker application that can recieve an image via a NodeJS FTP server container, predict the contents of the image using Ultralytics yolov8 detection module, and report the findings back to the user. Now with a simple WebGUI!
+A Docker server application that can recieve an image via a NodeJS FTP server container, predict the contents of the image using Ultralytics yolov8 detection module, and report the findings back to the user. All with real time viewing, editing, and deleting via a simple WebGUI!
 
 ## Setup 
 In the Dockerfile within the ftp folder, change the environment variables according to your environment. The "key.pem" and "cert.pem" files will need to be created and placed in the ftp folder.
@@ -40,7 +40,11 @@ In your client of choice, set the ip address of the server to the local ip addre
 The username and password of the ftp user are defined in the "ftp/Dockerfile" file. As of now, this cannot be changed after building the container. The default username is ftpuser and the default password is pass. 
 
 ### Accessing the user interface
-Connect to the web gui using localhost:3000 in your web browser.
+Connect to the web GUI using localhost:3000 in your web browser.
+
+From the web GUI, you can view images the photos taken by your security cameras. Clicking on an image will display the photo's ID, the AI detection results, and the camera that took the photo.
+
+Clicking on the "Cameras" button will bring you to a new page where you can view the camera id and change the location information of your cameras. 
 
 ### Locating images
 All the images recieved via ftp will be stored in the photos volume defined in the compose.yaml. 
