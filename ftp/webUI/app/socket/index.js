@@ -15,6 +15,22 @@ module.exports = (io, app) =>{
             db.changeCameraLocation("/app/volume/photos.db", camera_id, location);
         });
 
+
+        socket.on("deletePhoto", (cameraIDAsAString) => {
+            console.log("Deleting photo from database with id: " + cameraIDAsAString);
+            let cameraIDToDelete = parseInt(cameraIDAsAString);
+            console.log(cameraIDToDelete);
+            db.getPhotoFromIDPromise("/app/volume/photos.db", cameraIDToDelete).then((photo) => {
+                db.deletePhotoFromID("/app/volume/photos.db", cameraIDToDelete);
+                if(typeof photo.filename !== 'undefined'){
+                    console.log("Deleting photo at : " + photo.filename);
+                    h.deleteFile(photo.filename);
+                }
+            });
+            
+        })
+
+
         socket.on('Hello, World', (data) =>{
             console.log("hello world" + data);
         });

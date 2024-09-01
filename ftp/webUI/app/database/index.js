@@ -2,6 +2,7 @@
 const sqlite3 = require('sqlite3').verbose();
 var fs = require('fs');
 var currentIP = "";
+
 let getPhotosDataFromDatabasePromise = (databaseFilePath, photoFilePath) =>{
     return new Promise((resolve, reject) => {
         if(fs.existsSync(databaseFilePath))
@@ -113,6 +114,47 @@ let getCameraIDFromDatabasePromise = (databaseFilePath) =>{
     })
 }
 
+
+let deletePhotoFromID = (databaseFilePath, photoID) =>{
+    if(fs.existsSync(databaseFilePath))
+        {
+            const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
+            let queryText = "DELETE FROM photos WHERE id = (?)"
+            db.run(queryText, [photoID], (err) => {
+                if(err) {
+                    console.error(err.message);
+                    return(null);
+                }
+            });
+        } else {
+            console.log("Error:no database found");
+        }
+}
+
+
+let getPhotoFromIDPromise = (databaseFilePath, photoID) =>{
+    return new Promise((resolve, reject) => {
+        if(fs.existsSync(databaseFilePath))
+            {
+                const db = new sqlite3.Database(databaseFilePath); //"/app/volume/photos.db"
+                let queryText = "SELECT * FROM photos WHERE id = (?)";
+                console.log(queryText);
+                db.all(queryText, [photoID], (err, rows)=>{
+                    if(err){
+                        console.error(err.message);
+                        reject(err);
+                    } else{
+                        console.log(rows);
+                        resolve(rows[0]);
+                    }
+                    
+                })
+            } else {
+                reject('No db file found');
+            }
+    })
+}
+
 // Photos class contains the data of one element to be stored in the photos table of the database
 class Photo{        
     constructor(id, fileName, dogs, cats, persons, camera_id){
@@ -155,6 +197,8 @@ module.exports = {
     addCameraToDatabase,
     getCamerasDataFromDatabasePromise,
     getCameraIDFromDatabasePromise,
+    getPhotoFromIDPromise,
     changeCameraLocation,
+    deletePhotoFromID,
     Photo
 }

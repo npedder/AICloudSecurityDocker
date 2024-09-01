@@ -16,3 +16,9 @@
   margin-left: 800px;
   margin-right: auto;
 }
+
+.deletePhotoButton{
+  display: inline-block;
+  margin-left: 300px;
+  margin-right: auto;
+}

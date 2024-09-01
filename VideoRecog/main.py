@@ -31,6 +31,7 @@ def onEventCreated(photoPath):
 		time.sleep(2) #this is a bandage and not a real fix. This sleep would need to be modified depending on filesize and download speed
 		photo = createObjectFromPhotoAnalysis(photoPath)
 		photo.camera_id = requestCurrentCameraID()
+		print(photo.camera_id)
 		insertPhotoIntoTable(photo, dbFilePath)
     
 
